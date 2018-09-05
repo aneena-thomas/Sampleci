@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,10 +15,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // Initialize sign-in
+        GIDSignIn.sharedInstance().clientID = "632248915150-uc60nte3u48lcvfa0tet1pkdh4m5i1od.apps.googleusercontent.com"
+//        GIDSignIn.sharedInstance().delegate = self
+
         return true
     }
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        
+        let googleDidHandle = GIDSignIn.sharedInstance().handle(url as URL!,
+                                                                   sourceApplication: sourceApplication,
+                                                                   annotation: annotation)
+        
+        let facebookDidHandle = FBSDKApplicationDelegate.sharedInstance().application(
+            application,
+            open: url as URL!,
+            sourceApplication: sourceApplication,
+            annotation: annotation)
+        
+        return googleDidHandle || facebookDidHandle
+    }
+    private func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Override point for customization after application launch.
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+    }
+//    func application(_ application: UIApplication,
+//                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        return GIDSignIn.sharedInstance().handle(url,
+//                                                 sourceApplication: sourceApplication,
+//                                                 annotation: annotation)
+//    }
+    
+//    @available(iOS 9.0, *)
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+//        return GIDSignIn.sharedInstance().handle(url,
+//                                                 sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+//                                                 annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+//    }
+//
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
