@@ -1,0 +1,8 @@
+type "development" # The default type, can be: appstore, adhoc or development
+git_url "https://github.com/CollectivePotentialLLC/bookAnyoneCerts.git"
+#git_url "git@github.com:CollectivePotentialLLC/bookAnyoneCerts.git"
+
+app_identifier "com.experion.samplepro"   # app id
+
+# username "aneena.thomas@experionglobal.com"  # Your Apple Developer Portal username
+team_id "6KLQA7GG45"
